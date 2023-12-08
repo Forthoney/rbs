@@ -28,6 +28,24 @@
 #
 class TCPServer < TCPSocket
   public
+  # <!--
+  #   rdoc-file=ext/socket/tcpserver.c
+  #   - TCPServer.new([hostname,] port) => tcpserver
+  # -->
+  # Creates a new server socket bound to *port*.
+  #
+  # If *hostname* is given, the socket is bound to it.
+  #
+  #     serv = TCPServer.new("127.0.0.1", 28561)
+  #     s = serv.accept
+  #     s.puts Time.now
+  #     s.close
+  #
+  # Internally, TCPServer.new calls getaddrinfo() function to obtain addresses. If
+  # getaddrinfo() returns multiple addresses, TCPServer.new tries to create a
+  # server socket for each address and returns first one that is successful.
+  #
+  def initialize: (?String host, Integer port) -> void
 
   # <!--
   #   rdoc-file=ext/socket/tcpserver.c
@@ -175,23 +193,4 @@ class TCPServer < TCPSocket
   private
 
   def __accept_nonblock: (untyped) -> untyped
-
-  # <!--
-  #   rdoc-file=ext/socket/tcpserver.c
-  #   - TCPServer.new([hostname,] port) => tcpserver
-  # -->
-  # Creates a new server socket bound to *port*.
-  #
-  # If *hostname* is given, the socket is bound to it.
-  #
-  #     serv = TCPServer.new("127.0.0.1", 28561)
-  #     s = serv.accept
-  #     s.puts Time.now
-  #     s.close
-  #
-  # Internally, TCPServer.new calls getaddrinfo() function to obtain addresses. If
-  # getaddrinfo() returns multiple addresses, TCPServer.new tries to create a
-  # server socket for each address and returns first one that is successful.
-  #
-  def initialize: (?String host, Integer port) -> untyped
 end
